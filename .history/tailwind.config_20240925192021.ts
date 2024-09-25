@@ -11,7 +11,6 @@ const config: Config = {
   	extend: {
   		colors: {
   			ecode: '#e38a97',
-  			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
   				DEFAULT: 'hsl(var(--card))',
@@ -59,6 +58,6 @@ const config: Config = {
   		}
   	}
   },
-    plugins: [require("tailwindcss-animate")]
+  plugins: [require("tailwindcss-animate")],
 };
 export default config;

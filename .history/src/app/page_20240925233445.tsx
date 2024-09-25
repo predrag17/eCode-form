@@ -1,11 +1,11 @@
 import Image from "next/image"; 
 import logo from "./no-background.png";
-import SubjectForm from "@/app/components/SubjectForm";
+import SubjectForm from "@/components/shared/SubjectForm";
 
 export default function Home() {
   return (
     <>
-      <section className="pt-8 text-center text-white">
+      <section className="pt-8 text-center bg-gradient-to-r from-pink-200 bg-ecode text-white">
         {/* Logo */}
         <div className="flex justify-center mb-4">
           <Image src={logo} alt="Platform Logo" width={120} height={120} />
