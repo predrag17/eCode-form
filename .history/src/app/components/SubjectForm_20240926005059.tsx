@@ -24,6 +24,7 @@ import {
 } from "@/components/ui/select";
 
 import { formSchema } from "@/lib/validator";
+import { saveFormDetails } from "@/lib/database/service/form-service";
 
 const SubjectForm = () => {
   const form = useForm<z.infer<typeof formSchema>>({
@@ -38,12 +39,18 @@ const SubjectForm = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      const response = await saveFormDetails(values);
+      console.log("Form submitted successfully:", response);
+    } catch (error) {
+      console.error("Error submitting the form:", error);
+    }
+  };
+
 
   return (
-    <div className="flex items-center justify-center min-h-screen p-4 bg-gray-100">
+    <div className="flex items-center justify-center p-4">
       <div className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md md:max-w-md lg:max-w-lg">
         <Form {...form}>
           <form
@@ -58,7 +65,7 @@ const SubjectForm = () => {
                 <FormItem>
                   <FormLabel>Име</FormLabel>
                   <FormControl>
-                    <Input placeholder="John" {...field} />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -71,9 +78,9 @@ const SubjectForm = () => {
               name="lastName"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Last Name</FormLabel>
+                  <FormLabel>Презиме</FormLabel>
                   <FormControl>
-                    <Input placeholder="Doe" {...field} />
+                    <Input {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -86,7 +93,7 @@ const SubjectForm = () => {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email</FormLabel>
+                  <FormLabel>Е-меил</FormLabel>
                   <FormControl>
                     <Input
                       type="email"
@@ -105,7 +112,7 @@ const SubjectForm = () => {
               name="instagram"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Instagram</FormLabel>
+                  <FormLabel>Инстаграм</FormLabel>
                   <FormControl>
                     <Input placeholder="@example" {...field} />
                   </FormControl>
@@ -117,12 +124,12 @@ const SubjectForm = () => {
             {/* Phone Number */}
             <FormField
               control={form.control}
-              name="phoneNumber"
+              name="phone"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Телефон</FormLabel>
                   <FormControl>
-                    <Input placeholder="07xxxxxxx или 3897xxxxxxx" {...field} />
+                    <Input placeholder="07xxxxxxx" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -145,9 +152,13 @@ const SubjectForm = () => {
                         <SelectValue placeholder="Избери предмет" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="math">Math</SelectItem>
-                        <SelectItem value="science">Science</SelectItem>
-                        <SelectItem value="history">History</SelectItem>
+                        <SelectItem value="APS">Алгоритми и податочни структури</SelectItem>
+                        <SelectItem value="SP">Структурно порграмирање</SelectItem>
+                        <SelectItem value="OOP">Објектно-ориентирано програмирање</SelectItem>
+                        <SelectItem value="OS">Оперативни системи</SelectItem>
+                        <SelectItem value="BP">Бази на податоци</SelectItem>
+                        <SelectItem value="VP">Веб програмирање</SelectItem>
+                        <SelectItem value="DICK">Дизајн на интеракција човек-компјутер</SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -156,7 +167,7 @@ const SubjectForm = () => {
               )}
             />
 
-            <Button type="submit" className="w-full">
+            <Button type="submit">
               Пријави се
             </Button>
           </form>

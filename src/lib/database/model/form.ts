@@ -3,6 +3,6 @@ export interface Form{
     lastName: string;
     email: string;
     instagram: string;
-    phoneNumber: string;
+    phone: string;
     subject: string;
 }

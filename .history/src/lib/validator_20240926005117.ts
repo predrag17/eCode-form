@@ -13,7 +13,7 @@ export const formSchema = z.object({
   instagram: z.string().min(1, {
     message: "Полето за инстаграм профилот е задолжителено.",
   }),
-  phoneNumber: z
+  phone: z
     .string()
     .min(9, { message: "Телефонскиот број мора да има точно 9 цифри." })
     .max(9, { message: "Телефонскиот број мора да има точно 9 цифри." })

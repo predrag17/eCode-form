@@ -34,7 +34,7 @@ const SubjectForm = () => {
       lastName: "",
       email: "",
       instagram: "",
-      phoneNumber: "",
+      phone: "",
       subject: "",
     },
   });
@@ -124,7 +124,7 @@ const SubjectForm = () => {
             {/* Phone Number */}
             <FormField
               control={form.control}
-              name="phoneNumber"
+              name="phone"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Телефон</FormLabel>
