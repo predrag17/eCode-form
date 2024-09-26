@@ -1,9 +1,9 @@
+import axiosInstance from "@/config/axios-instance";
 import { Form } from "../model/form";
-import axios from "axios";
 
 export const saveFormDetails = async (formData: Form) => {
   try {
-    const response = await axios.post(
+    const response = await axiosInstance.post(
       '/save',
       formData
     );
