@@ -22,7 +22,7 @@ const SuccessPage = () => {
 
   useEffect(() => {
     setWindowDimensions({
-        width: window.innerWidth - 50,
+        width: window.innerWidth - 51,
         height: window.innerHeight - 10,
       });
   }, [])
