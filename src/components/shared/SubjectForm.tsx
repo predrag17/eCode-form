@@ -30,6 +30,7 @@ import Spinner from "./Spinner";
 
 const SubjectForm = () => {
   const [loading, setLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -46,6 +47,7 @@ const SubjectForm = () => {
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setLoading(true);
+    setErrorMessage("");
     try {
       const response = await saveFormDetails(values);
       console.log("Form submitted successfully:", response);
@@ -56,7 +58,7 @@ const SubjectForm = () => {
       }, 3000);
     } catch (error) {
       setLoading(false);
-      console.error("Error submitting the form:", error);
+      setErrorMessage("Грешка при пријавување. Обиди се повторно!");
     }
   };
 
@@ -65,132 +67,139 @@ const SubjectForm = () => {
       <div className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md md:max-w-md lg:max-w-lg">
         {loading ? (
           <div className="flex justify-center">
-            <Spinner /> {/* Show Spinner while loading */}
+            <Spinner />
           </div>
         ) : (
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              {/* First Name */}
-              <FormField
-                control={form.control}
-                name="firstName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Име</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+          <>
+            {errorMessage && (
+              <div className="mb-4 text-red-500 text-center">
+                {errorMessage}
+              </div>
+            )}
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                {/* First Name */}
+                <FormField
+                  control={form.control}
+                  name="firstName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Име</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              {/* Last Name */}
-              <FormField
-                control={form.control}
-                name="lastName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Презиме</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                {/* Last Name */}
+                <FormField
+                  control={form.control}
+                  name="lastName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Презиме</FormLabel>
+                      <FormControl>
+                        <Input {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              {/* Email */}
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Е-меил</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="example@gmail.com"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                {/* Email */}
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Е-меил</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="example@gmail.com"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              {/* Instagram */}
-              <FormField
-                control={form.control}
-                name="instagram"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Инстаграм</FormLabel>
-                    <FormControl>
-                      <Input placeholder="@example" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                {/* Instagram */}
+                <FormField
+                  control={form.control}
+                  name="instagram"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Инстаграм</FormLabel>
+                      <FormControl>
+                        <Input placeholder="@example" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              {/* Phone Number */}
-              <FormField
-                control={form.control}
-                name="phone"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Телефон</FormLabel>
-                    <FormControl>
-                      <Input placeholder="07xxxxxxx" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                {/* Phone Number */}
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Телефон</FormLabel>
+                      <FormControl>
+                        <Input placeholder="07xxxxxxx" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              {/* Subject (Select) */}
-              <FormField
-                control={form.control}
-                name="subject"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Предмети</FormLabel>
-                    <FormControl>
-                      <Select
-                        onValueChange={field.onChange}
-                        defaultValue={field.value}
-                      >
-                        <SelectTrigger>
-                          <SelectValue placeholder="Избери предмет" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="APS">
-                            Алгоритми и податочни структури
-                          </SelectItem>
-                          <SelectItem value="SP">
-                            Структурно порграмирање
-                          </SelectItem>
-                          <SelectItem value="OOP">
-                            Објектно-ориентирано програмирање
-                          </SelectItem>
-                          <SelectItem value="OS">Оперативни системи</SelectItem>
-                          <SelectItem value="BP">Бази на податоци</SelectItem>
-                          <SelectItem value="VP">Веб програмирање</SelectItem>
-                          <SelectItem value="DICK">
-                            Дизајн на интеракција човек-компјутер
-                          </SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                {/* Subject (Select) */}
+                <FormField
+                  control={form.control}
+                  name="subject"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Предмети</FormLabel>
+                      <FormControl>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Избери предмет" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="APS">
+                              Алгоритми и податочни структури
+                            </SelectItem>
+                            <SelectItem value="SP">
+                              Структурно порграмирање
+                            </SelectItem>
+                            <SelectItem value="OOP">
+                              Објектно-ориентирано програмирање
+                            </SelectItem>
+                            <SelectItem value="OS">Оперативни системи</SelectItem>
+                            <SelectItem value="BP">Бази на податоци</SelectItem>
+                            <SelectItem value="VP">Веб програмирање</SelectItem>
+                            {/* <SelectItem value="DICK">
+                              Дизајн на интеракција човек-компјутер
+                            </SelectItem> */}
+                          </SelectContent>
+                        </Select>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-              <Button type="submit">Пријави се</Button>
-            </form>
-          </Form>
+                <Button type="submit">Пријави се</Button>
+              </form>
+            </Form>
+          </>
         )}
       </div>
     </div>

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "E-code Form",
+  title: "eCode Form",
   description: "Platform for learning computer science",
 };
 
