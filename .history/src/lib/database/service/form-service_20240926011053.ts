@@ -4,7 +4,7 @@ import axios from "axios";
 export const saveFormDetails = async (formData: Form) => {
   try {
     const response = await axios.post(
-      '/save',
+      `https://ecode-form-api-production.up.railway.app/api/form/save`,
       formData
     );
     return response.data;

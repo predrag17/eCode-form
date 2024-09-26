@@ -16,7 +16,7 @@ export default function Home() {
 
         <p className="mt-4 text-lg text-black font-light">
           Бидете дел од нашата платформа за учење. <br/>
-          Пријави се сега и доби <span className="font-bold">10% попуст</span>.
+          Пријави се сега и доби <b>10%</b> попуст.
         </p>
       </section>
 

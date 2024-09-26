@@ -10,13 +10,15 @@ export default function Home() {
           <Image src={logo} alt="Platform Logo" width={120} height={120} />
         </div>
 
+        {/* Title */}
         <h3 className="text-4xl text-black font-bold tracking-wide">
           Започни со учење денес!
         </h3>
 
+        {/* Description */}
         <p className="mt-4 text-lg text-black font-light">
           Бидете дел од нашата платформа за учење. <br/>
-          Пријави се сега и доби <span className="font-bold">10% попуст</span>.
+          Пријави се сега и доби 10% попуст.
         </p>
       </section>
 

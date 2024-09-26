@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -25,8 +25,12 @@ import {
 
 import { formSchema } from "@/lib/validator";
 import { saveFormDetails } from "@/lib/database/service/form-service";
+import { useRouter } from "next/navigation";
 
 const SubjectForm = () => {
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,23 +44,25 @@ const SubjectForm = () => {
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setLoading(true);
     try {
       const response = await saveFormDetails(values);
       console.log("Form submitted successfully:", response);
+
+      setTimeout(() => {
+        setLoading(false);
+        router.push("/success")
+      });
     } catch (error) {
       console.error("Error submitting the form:", error);
     }
   };
 
-
   return (
     <div className="flex items-center justify-center p-4">
       <div className="w-full max-w-sm bg-white p-6 rounded-lg shadow-md md:max-w-md lg:max-w-lg">
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             {/* First Name */}
             <FormField
               control={form.control}
@@ -152,13 +158,21 @@ const SubjectForm = () => {
                         <SelectValue placeholder="Избери предмет" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="APS">Алгоритми и податочни структури</SelectItem>
-                        <SelectItem value="SP">Структурно порграмирање</SelectItem>
-                        <SelectItem value="OOP">Објектно-ориентирано програмирање</SelectItem>
+                        <SelectItem value="APS">
+                          Алгоритми и податочни структури
+                        </SelectItem>
+                        <SelectItem value="SP">
+                          Структурно порграмирање
+                        </SelectItem>
+                        <SelectItem value="OOP">
+                          Објектно-ориентирано програмирање
+                        </SelectItem>
                         <SelectItem value="OS">Оперативни системи</SelectItem>
                         <SelectItem value="BP">Бази на податоци</SelectItem>
                         <SelectItem value="VP">Веб програмирање</SelectItem>
-                        <SelectItem value="DICK">Дизајн на интеракција човек-компјутер</SelectItem>
+                        <SelectItem value="DICK">
+                          Дизајн на интеракција човек-компјутер
+                        </SelectItem>
                       </SelectContent>
                     </Select>
                   </FormControl>
@@ -167,9 +181,7 @@ const SubjectForm = () => {
               )}
             />
 
-            <Button type="submit">
-              Пријави се
-            </Button>
+            <Button type="submit">Пријави се</Button>
           </form>
         </Form>
       </div>
