@@ -1,5 +1,5 @@
 import Image from "next/image"; 
-import logo from "./no-background.png";
+import logo from "./circled-logo.png";
 import SubjectForm from "@/components/shared/SubjectForm";
 
 export default function Home() {
